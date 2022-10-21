@@ -1,26 +1,24 @@
 const { exec } = require("child_process");
 
+function execSync () {
+  return new Promise( (resolve, reject) => {
+    exec("kubectl get namespaces", (error, stdout, stderr) => {
+      if (error) {
+          reject(error.message);
+      }
+      resolve(stderr);
+    });
+  })
+}
 
 class kubectlExec {
   constructor () {
-    this.nameSpaces = null;
+    this.nameSpace = null;
   }
 
-  async execKubeCtl() {
-    let data = '';
-    
-    exec("kubectl get namespaces", (error, stdout, stderr) => {
-      if (error) {
-          data = null;
-          return;
-      }
-      if (stderr) {
-          data = stderr;
-          return;
-      }
-      console.log('hiiii');
-      return data;
-    });
+  async setNameSpaces() {
+    let data = await execSync();
+    console.log('my data', data.split('\n'));
     return data;
   }
 }
@@ -28,4 +26,4 @@ class kubectlExec {
 
 const kb = new kubectlExec();
 
-console.log(kb.execKubeCtl());
+console.log(kb.setNameSpaces());
