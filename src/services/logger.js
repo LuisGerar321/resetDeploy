@@ -8,7 +8,6 @@ const customFormat = format.printf(({ level, message, label, timestamp }) => {
 const logger = createLogger({
   level: 'info',
   format: format.combine(
-    // format.label({ label: 'Message!' }),
     format.timestamp(),
     customFormat
   ),
