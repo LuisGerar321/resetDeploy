@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const ServerMonitoring = require('./services/cronScheduleService');
 const kubectl = require('./services/kubectlCommandsService');
 const logger = require('./services/logger');
