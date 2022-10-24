@@ -1,15 +1,19 @@
 const cron = require('node-cron');
 const cronSchedule = require('./services/cronScheduleService');
+const kubectl = require('./services/kubectlCommandsService');
 const logger = require('./services/logger');
 
-function main() {
-  cronSchedule.init(async ()=> {
-    const isHostConnection = pinLogginServe();
+
+
+async function main() {
+  await kubectl.init("../");
+  // cronSchedule.init(async ()=> {
+    const isHostConnection = null;
     if(!isHostConnection) {
-      await resetKubeCtlDeployment();
+      await kubectl.resetUserDeployment();
     }
     logger.info("This is callback");
-  });
+  // });
 };
 
 main();
