@@ -13,7 +13,7 @@ function execCommand (command) {
 }
 
 class KubectlExec {
-  constructor (path = "../../") {
+  constructor (path = "../") {
     this.nameSpaces;
     this.path = path;
   }
@@ -37,16 +37,17 @@ class KubectlExec {
     return this.nameSpaces;
   }
   async resetUserDeployment() {
-    const deleteCommand = `kubectl delete -f ../zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
-    const applyCommand = `kubectl apply -f ../zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
-    console.log("Command to be executed:\n\t", deleteCommand);
-    console.log("Command to be executed:\n\t", applyCommand);
-    console.log("dirpath: ", __dirname);
-    let res = "";
-    res = await execCommand(deleteCommand);
-    logger.info(res);
-    res = await execCommand(applyCommand);
-    logger.info(res);
+    const deleteCommand = `kubectl delete -f ${this.path}zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
+    const applyCommand = `kubectl apply -f ${this.path}zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
+    try {
+      let res = "";
+      res = await execCommand(deleteCommand);
+      logger.info(res);
+      res = await execCommand(applyCommand);
+      logger.info(res);
+    } catch (err) {
+      logger.warn(err);
+    }
   }
 }
 

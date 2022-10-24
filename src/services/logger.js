@@ -17,13 +17,13 @@ const logger = createLogger({
       new transports.File({
           maxFiles: 1,
           maxsize: Infinity,
-          filename: './info.log'
+          filename: './loggerFiles/info.log'
       }),
       new transports.File({
-        level: 'warn',
+        level: 'error',
         maxFiles: 24,
         maxsize: 3000,
-        filename: './warn.log'
+        filename: './loggerFiles/error.log'
     }),
   ]
 });

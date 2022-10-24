@@ -1,5 +1,5 @@
 const cron = require('node-cron');
-const cronSchedule = require('./services/cronScheduleService');
+const ServerMonitoring = require('./services/cronScheduleService');
 const kubectl = require('./services/kubectlCommandsService');
 const logger = require('./services/logger');
 
@@ -7,13 +7,13 @@ const logger = require('./services/logger');
 
 async function main() {
   await kubectl.init("../");
-  // cronSchedule.init(async ()=> {
+  ServerMonitoring.init(async ()=> {
     const isHostConnection = null;
     if(!isHostConnection) {
+      logger.info("Serve Lost Connection, reseting back users deployment");
       await kubectl.resetUserDeployment();
     }
-    logger.info("This is callback");
-  // });
+  }, 1);
 };
 
 main();
