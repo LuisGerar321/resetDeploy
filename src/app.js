@@ -2,8 +2,6 @@ const ServerMonitoring = require('./services/cronScheduleService');
 const kubectl = require('./services/kubectlCommandsService');
 const logger = require('./services/logger');
 
-
-
 async function main() {
   await kubectl.init("../");
   ServerMonitoring.init(async ()=> {
