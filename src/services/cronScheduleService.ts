@@ -1,11 +1,11 @@
-import cron from 'node-cron';
+import cron from "node-cron";
 
 interface CallbackType {
-  (argument?: string | number): void 
+  (argument?: string | number): void;
 }
 
 class ServerMonitoring {
-  init (callback: CallbackType , minutes = 1) {
+  init(callback: CallbackType, minutes = 1) {
     cron.schedule(`*/${minutes} * * * *`, () => {
       callback();
     });

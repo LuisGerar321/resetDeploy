@@ -1,27 +1,28 @@
 import { exec } from "child_process";
 import logger from "./logger";
 
-function execCommand (command: string): Promise<string> {
-  return new Promise( (resolve, reject) => {
+function execCommand(command: string): Promise<string> {
+  return new Promise((resolve, reject) => {
     exec(command, (error, stdout) => {
       if (error) {
-          reject(error.message);
+        reject(error.message);
       }
       resolve(stdout);
     });
-  })
+  });
 }
 
 class KubectlExec {
-  private nameSpaces: string[];
   public path: string;
-  constructor (path = "../") {
+  private nameSpaces: string[];
+
+  constructor(path = "../") {
     this.nameSpaces = [];
     this.path = path;
   }
 
-  async init(){
-    await this.setNameSpaces(); 
+  async init() {
+    await this.setNameSpaces();
   }
 
   async setNameSpaces() {
@@ -29,22 +30,25 @@ class KubectlExec {
     const nameSpaces: string[] = res.split("\n");
     const filteredName: string[] = nameSpaces.map((value = "") => {
       return value.slice(0, value.indexOf(" "));
-    })
-    filteredName.shift()
+    });
+
+    filteredName.shift();
     filteredName.pop();
     this.nameSpaces = filteredName;
   }
+
   getNameSpaces() {
-    
     return this.nameSpaces;
   }
+
   async resetUserDeployment(): Promise<void> {
     const deleteCommand = `kubectl delete -f ${this.path}zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
     const applyCommand = `kubectl apply -f ${this.path}zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
+
     try {
-      let res = "";
-      res = await execCommand(deleteCommand);
+      let res = await execCommand(deleteCommand);
       logger.info(res);
+
       res = await execCommand(applyCommand);
       logger.info(res);
     } catch (err) {
