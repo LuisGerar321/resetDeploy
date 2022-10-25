@@ -1,9 +1,9 @@
-const { exec } = require("child_process");
-const logger = require("./logger");
+import { exec } from "child_process";
+import { info, warn } from "./logger";
 
 function execCommand (command) {
   return new Promise( (resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
+    exec(command, (error, stdout) => {
       if (error) {
           reject(error.message);
       }
@@ -18,7 +18,7 @@ class KubectlExec {
     this.path = path;
   }
 
-  async init(path){
+  async init(_path){
     await this.setNameSpaces(); 
   }
 
@@ -42,14 +42,14 @@ class KubectlExec {
     try {
       let res = "";
       res = await execCommand(deleteCommand);
-      logger.info(res);
+      info(res);
       res = await execCommand(applyCommand);
-      logger.info(res);
+      info(res);
     } catch (err) {
-      logger.warn(err);
+      warn(err);
     }
   }
 }
 
 const kubectl = new KubectlExec();
-module.exports = kubectl;
+export default kubectl;

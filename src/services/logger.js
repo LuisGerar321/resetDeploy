@@ -1,8 +1,8 @@
-const { createLogger, transports, format } = require('winston');
-const chalk = require('chalk');
+import { createLogger, transports, format } from 'winston';
+import { green } from 'chalk';
 
-const customFormat = format.printf(({ level, message, label, timestamp }) => {
-  return chalk.green(`${timestamp} ${level}: ${message}`);
+const customFormat = format.printf(({ level, message, timestamp }) => {
+  return green(`${timestamp} ${level}: ${message}`);
 });
 
 const logger = createLogger({
@@ -27,4 +27,4 @@ const logger = createLogger({
   ]
 });
 
-module.exports = logger;
+export default logger;

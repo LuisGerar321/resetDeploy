@@ -1,11 +1,11 @@
-const cron = require('node-cron');
+import { schedule } from 'node-cron';
 
 class ServerMonitoring {
   init (callback, minutes = 1) {
-    cron.schedule(`*/${minutes} * * * *`, () => {
+    schedule(`*/${minutes} * * * *`, () => {
       callback();
-    })
+    });
   }
 }
 
-module.exports = new ServerMonitoring();
+export default new ServerMonitoring();

@@ -1,6 +1,6 @@
-const ServerMonitoring = require('./services/cronScheduleService');
-const kubectl = require('./services/kubectlCommandsService');
-const logger = require('./services/logger');
+import ServerMonitoring from './services/cronScheduleService';
+import kubectl from './services/kubectlCommandsService';
+import logger from './services/logger';
 
 async function main() {
   await kubectl.init("../");
