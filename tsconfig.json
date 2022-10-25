@@ -1,27 +1,32 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
-    "target": "es5",
-    "downlevelIteration": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
     "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "baseUrl": "src",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
+    "noImplicitAny": false,
+    "outDir": "dist",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "preserveConstEnums": true,
+    "removeComments": false,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "rootDir": "src",
+    "strict": true,
+    "sourceMap": true,
+    "target": "es2015"
   },
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Recommended",
   "include": [
-    "src"
+    "src/**/*.ts"
   ]
 }

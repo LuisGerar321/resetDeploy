@@ -1,6 +1,5 @@
 module.exports = {
   env: {
-    commonjs: true,
     es2021: true,
     node: true,
   },
@@ -10,6 +9,7 @@ module.exports = {
     sourceType: "module",
   },
   settings: {
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"],
     },
@@ -21,10 +21,10 @@ module.exports = {
     },
   },
   extends: [
+    "plugin:@typescript-eslint/recommended",
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:import/typescript",
-    "plugin:@typescript-eslint/recommended",
     "prettier",
   ],
   plugins: ["@typescript-eslint"],
