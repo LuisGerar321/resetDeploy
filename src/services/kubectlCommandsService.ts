@@ -24,7 +24,7 @@ interface KubeCtlInitConfig {
 class KubectlExec {
   public path: string;
   private nameSpaces: string[];
-  private context: string;
+  private readonly context: string;
 
   constructor({path = "../", context = ContextType.QA} : KubeCtlInitConfig) {
     this.nameSpaces = [];
@@ -61,7 +61,7 @@ class KubectlExec {
 
   async resetUserDeployment(): Promise<void> {
     try {
-      // Reseting Admin Services
+      // Resetting Admin Services
       let deleteCommand: string = this.genDeleteCommand(this.path, "admin", this.context);
       let applyCommand: string = this.genApplyCommand(this.path, "admin", this.context);
       let res = await execCommand(deleteCommand);
@@ -69,7 +69,7 @@ class KubectlExec {
       res = await execCommand(applyCommand);
       logger.info(res);
 
-      //Reseting Student Services.
+      //Resetting Student Services.
       deleteCommand = this.genDeleteCommand(this.path, "student", this.context);
       applyCommand = this.genApplyCommand(this.path, "student", this.context);
       res = await execCommand(deleteCommand);
