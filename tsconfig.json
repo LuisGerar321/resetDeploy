@@ -22,7 +22,7 @@
     "rootDir": "src",
     "strict": true,
     "sourceMap": true,
-    "target": "es2015"
+    "target": "ES2016"
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Recommended",
