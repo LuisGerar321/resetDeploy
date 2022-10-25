@@ -1,12 +1,11 @@
-const cron = require('node-cron');
-const logger = require('./logger');
+import cron from "node-cron";
 
 class cronSchedule {
-  init (callback) {
-    cron.schedule('*/1 * * * *', () => {
+  init(callback) {
+    cron.schedule("*/1 * * * *", () => {
       callback();
-    })
+    });
   }
 }
 
-module.exports = new cronSchedule();
+export default new cronSchedule();

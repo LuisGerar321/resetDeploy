@@ -1,15 +1,16 @@
-const cron = require('node-cron');
-const cronSchedule = require('./services/cronScheduleService');
-const logger = require('./services/logger');
+import cronSchedule from "./services/cronScheduleService";
+import logger from "./services/logger";
 
 function main() {
-  cronSchedule.init(async ()=> {
+  cronSchedule.init(async () => {
     const isHostConnection = pinLogginServe();
-    if(!isHostConnection) {
+
+    if (!isHostConnection) {
       await resetKubeCtlDeployment();
     }
+
     logger.info("This is callback");
   });
-};
+}
 
-main();
+main()
