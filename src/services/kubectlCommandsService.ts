@@ -12,13 +12,24 @@ function execCommand(command: string): Promise<string> {
   });
 }
 
+enum ContextType {
+  QA = "qa",
+  PROD = "prod",
+}
+interface KubeCtlInitConfig {
+  path?: string,
+  context?: ContextType;
+}
+
 class KubectlExec {
   public path: string;
   private nameSpaces: string[];
+  private readonly context: string;
 
-  constructor(path = "../") {
+  constructor({path = "../", context = ContextType.QA} : KubeCtlInitConfig) {
     this.nameSpaces = [];
     this.path = path;
+    this.context = context;
   }
 
   async init() {
@@ -41,14 +52,28 @@ class KubectlExec {
     return this.nameSpaces;
   }
 
-  async resetUserDeployment(): Promise<void> {
-    const deleteCommand = `kubectl delete -f ${this.path}zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
-    const applyCommand = `kubectl apply -f ${this.path}zaamna-infrastructure/templates/kops/bsa/qa/deployments/admin/deployment-back-users.yaml`;
+  private genDeleteCommand(path: string, namespace: string, context: string): string {
+    return `kubectl delete -f ${path}zaamna-infrastructure/templates/kops/bsa/${context}/deployments/${namespace}/deployment-back-users.yaml`
+  }
+  private genApplyCommand(path: string, namespace: string, context: string): string {
+    return `kubectl apply -f ${path}zaamna-infrastructure/templates/kops/bsa/${context}/deployments/${namespace}/deployment-back-users.yaml`
+  }
 
+  async resetUserDeployment(): Promise<void> {
     try {
+      // Resetting Admin Services
+      let deleteCommand: string = this.genDeleteCommand(this.path, "admin", this.context);
+      let applyCommand: string = this.genApplyCommand(this.path, "admin", this.context);
       let res = await execCommand(deleteCommand);
       logger.info(res);
+      res = await execCommand(applyCommand);
+      logger.info(res);
 
+      //Resetting Student Services.
+      deleteCommand = this.genDeleteCommand(this.path, "student", this.context);
+      applyCommand = this.genApplyCommand(this.path, "student", this.context);
+      res = await execCommand(deleteCommand);
+      logger.info(res);
       res = await execCommand(applyCommand);
       logger.info(res);
     } catch (err) {
@@ -57,5 +82,5 @@ class KubectlExec {
   }
 }
 
-const kubectl = new KubectlExec();
+const kubectl = new KubectlExec({context: ContextType.PROD});
 export default kubectl;
