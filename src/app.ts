@@ -14,7 +14,7 @@ async function main() {
       await kubectl.resetUserDeployment();
       logger.info("Users deployment resetting completed");
     }
-  }, 1);
+  }, 10);
 }
 
 main();
